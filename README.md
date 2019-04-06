@@ -1,2 +1,4 @@
-# panacea
-Ethereum 2.0 Beacon Chain Elixir Client
+# Panacea
+
+**TODO: Add description**
+
