@@ -1,0 +1,3 @@
+20:09:05.464 [warn]   The on_load function for module Elixir.Bls returned:
+{:error, {:upgrade, 'Upgrade not supported by this NIF library.'}}
+
