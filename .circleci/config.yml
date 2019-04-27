@@ -20,6 +20,7 @@ jobs:
       # specify any bash command here prefixed with `run: `
       - run: curl https://sh.rustup.rs -sSf | sh -s -- -y
       - run: source $HOME/.cargo/env
+      - run: cargo -V
       - run: mix local.hex --force
       - run: mix local.rebar --force
       - run: mix deps.get
