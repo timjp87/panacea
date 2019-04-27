@@ -9,7 +9,6 @@ defmodule Beaconchain.Db do
   end
 
   def init(stack) do
-    # :rocksdb.open("db/keystore.db", [])
     {:ok, stack}
   end
 

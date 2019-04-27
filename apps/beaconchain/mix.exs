@@ -37,7 +37,6 @@ defmodule Beaconchain.MixProject do
       {:cachex, "~> 3.1"},
       {:ranch, "~> 1.6"},
       {:exw3, git: "https://github.com/hswick/exw3.git", branch: "master"},
-      {:rocksdb, "~> 1.1"},
       {:typed_struct, "~> 0.1.4"}
     ]
   end
