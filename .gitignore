@@ -27,3 +27,6 @@ erl_crash.dump
 
 # Ignore the release directory
 /rel
+
+# Ignore VSCode directory
+/.vscode
