@@ -19,7 +19,7 @@ jobs:
 
       # specify any bash command here prefixed with `run: `
       - run: curl https://sh.rustup.rs -sSf | sh -s -- -y
-      - run: ls -l ../.cargo
+      - run: echo 'export PATH=$PATH:/home/circleci/.cargo/bin' >> $BASH_ENV
       - run: mix local.hex --force
       - run: mix local.rebar --force
       - run: mix deps.get
