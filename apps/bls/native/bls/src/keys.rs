@@ -7,6 +7,17 @@ use super::g1::G1Point;
 use super::rng::get_seeded_rng;
 use std::fmt;
 
+use rustler::{Env, Term, NifResult, Encoder};
+
+mod atoms {
+    rustler_atoms! {
+        atom ok;
+        //atom error;
+        //atom __true__ = "true";
+        //atom __false__ = "false";
+    }
+}
+
 #[derive(Clone)]
 /// A BLS secret key.
 pub struct SecretKey {
@@ -141,11 +152,14 @@ pub struct Keypair {
 }
 
 impl Keypair {
-    /// Instantiate a Keypair using SecretKey::random().
+    // TODO
+    // Instantiate a Keypair using SecretKey::random().
+    // pub fn random<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     pub fn random() -> Self {
         let sk = SecretKey::random();
         let pk = PublicKey::from_secret_key(&sk);
         Keypair { sk, pk }
+        // Ok((atoms::ok(), sk, pk).encode(env))
     }
 }
 

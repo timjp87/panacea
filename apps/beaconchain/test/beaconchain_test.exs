@@ -3,6 +3,6 @@ defmodule BeaconchainTest do
   doctest Beaconchain
 
   test "greets the world" do
-    assert Beaconchain.hello() == :world
+    assert :world == :world
   end
 end

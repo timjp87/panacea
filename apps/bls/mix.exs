@@ -13,6 +13,7 @@ defmodule Bls.MixProject do
       start_permanent: Mix.env() == :prod,
       compilers: [:rustler] ++ Mix.compilers(),
       rustler_crates: rustler_crates(),
+      test_coverage: [tool: ExCoveralls],
       deps: deps()
     ]
   end

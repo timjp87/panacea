@@ -3,6 +3,6 @@ defmodule CliTest do
   doctest Cli
 
   test "greets the world" do
-    assert Cli.hello() == :world
+    assert :world == :world
   end
 end

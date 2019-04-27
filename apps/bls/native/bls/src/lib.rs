@@ -9,7 +9,10 @@ use rustler::{Env, Term, NifResult, Encoder};
 
 rustler_export_nifs! {
     "Elixir.Bls",
-    [("add", 2, add)],
+    [
+    ("add", 2, add),
+    //("new_keypair", 0, Keypair::random)
+    ],
     None
 }
 
