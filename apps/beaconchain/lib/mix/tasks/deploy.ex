@@ -7,7 +7,6 @@ defmodule Mix.Tasks.Deploy do
   MIN_DEPOSIT is 1 ETH and MAX_DEPOSIT is 32 ETH.
   """
 
-  require Ethereumex
   require Logger
 
   @shortdoc "Deploys the deposit contract."
@@ -21,9 +20,8 @@ defmodule Mix.Tasks.Deploy do
     Logger.info("Started contract manager.")
     abi = ExW3.load_abi("apps/beaconchain/lib/mix/tasks/DepositContract.abi")
     Logger.info("Loaded contract ABI.")
-    a = ExW3.Contract.register(:DepositContract, abi)
+    ExW3.Contract.register(:DepositContract, abi)
     Logger.info("Contract registered.")
-    IO.inspect(a)
 
     {:ok, address, tx_hash} =
       ExW3.Contract.deploy(:DepositContract,
