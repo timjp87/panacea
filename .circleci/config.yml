@@ -19,9 +19,8 @@ jobs:
 
       # specify any bash command here prefixed with `run: `
       - run: curl https://sh.rustup.rs -sSf | sh -s -- -y
-      - run: export PATH=$PATH:$HOME/.cargo/bin/ >> $BASH_ENV
-      - run: echo $PATH
-      - run: cargo -V
+      - run: pwd
+      - run: ls -l .cargo
       - run: mix local.hex --force
       - run: mix local.rebar --force
       - run: mix deps.get
