@@ -13,7 +13,7 @@ pub struct Signature {
     pub point: G2Point,
 }
 
-pub struct Buffer {
+pub struct Message {
 	pub data: Vec<u8>,
 }
 
@@ -21,16 +21,12 @@ impl Signature {
 
     // Instantiate a new Signature from a message and a SecretKey.
     pub fn new<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    //pub fn new(msg: &[u8], d: u64, sk: &SecretKey) -> Self {
         let sk: ResourceArc<SecretKey> = args[2].decode()?;
         let d: u64 = args[1].decode()?;
-        let msg: str = args[0].decode()?;
+        let msg: Vec<u8> = args[0].decode()?;
         let hash_point = hash_on_g2(&msg, d);
         let mut sig = hash_point.mul(&sk.x);
         sig.affine();
-        // Self {
-        //     point: G2Point::from_raw(sig),
-        // }
         let signature = ResourceArc::new(Signature{point: G2Point::from_raw(sig)});
         Ok((signature).encode(env))
     }
