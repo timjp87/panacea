@@ -13,10 +13,6 @@ pub struct Signature {
     pub point: G2Point,
 }
 
-pub struct Message {
-	pub data: Vec<u8>,
-}
-
 impl Signature {
 
     // Instantiate a new Signature from a message and a SecretKey.
@@ -46,7 +42,8 @@ impl Signature {
     ///
     /// In theory, should only return true if the PublicKey matches the SecretKey used to
     /// instantiate the Signature.
-    pub fn verify(&self, msg: &[u8], d: u64, pk: &PublicKey) -> bool {
+    // pub fn verify(&self, msg: &[u8], d: u64, pk: &PublicKey) -> bool {
+    pub fn new<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
         let mut msg_hash_point = hash_on_g2(msg, d);
         msg_hash_point.affine();
         let mut lhs = ate_pairing(self.point.as_raw(), &GENERATORG1);
