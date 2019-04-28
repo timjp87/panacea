@@ -13,6 +13,13 @@ pub struct Signature {
     pub point: G2Point,
 }
 
+mod atoms {
+    rustler_atoms! {
+        atom __true__ = "true";
+        atom __false__ = "false";
+    }
+}
+
 impl Signature {
 
     // Instantiate a new Signature from a message and a SecretKey.
@@ -43,12 +50,20 @@ impl Signature {
     /// In theory, should only return true if the PublicKey matches the SecretKey used to
     /// instantiate the Signature.
     // pub fn verify(&self, msg: &[u8], d: u64, pk: &PublicKey) -> bool {
-    pub fn new<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-        let mut msg_hash_point = hash_on_g2(msg, d);
+    pub fn verify<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let sig: ResourceArc<Signature> = args[0].decode()?;
+        let msg: Vec<u8> = args[1].decode()?;
+        let d: u64 = args[2].decode()?;
+        let pk: ResourceArc<PublicKey> = args[3].decode()?;
+
+        let mut msg_hash_point = hash_on_g2(&msg, d);
         msg_hash_point.affine();
-        let mut lhs = ate_pairing(self.point.as_raw(), &GENERATORG1);
+        let mut lhs = ate_pairing(sig.point.as_raw(), &GENERATORG1);
         let mut rhs = ate_pairing(&msg_hash_point, &pk.point.as_raw());
-        lhs.equals(&mut rhs)
+        match lhs.equals(&mut rhs) {
+            true => Ok((atoms::__true__()).encode(env)),
+            false => Ok((atoms::__false__()).encode(env)),
+        }
     }
 
     /// Verify the Signature against a PublicKey, where the message has already been hashed.

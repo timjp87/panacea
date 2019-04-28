@@ -11,7 +11,8 @@ rustler_export_nifs! {
     "Elixir.Bls",
     [
     ("new_kp", 0, Keypair::random),
-    ("sign", 3, Signature::new)
+    ("sign", 3, Signature::new),
+    ("verify", 4, Signature::verify)
     ],
     Some(on_load)
 }
@@ -20,7 +21,6 @@ fn on_load(env: Env, _info: Term) -> bool {
     resource_struct_init!(PublicKey, env);
     resource_struct_init!(SecretKey, env);
     resource_struct_init!(Signature, env);
-    resource_struct_init!(Message, env);
     resource_struct_init!(Keypair, env);
     resource_struct_init!(AggregatePublicKey, env);
     resource_struct_init!(AggregateSignature, env);
@@ -49,4 +49,4 @@ use self::amcl::bls381 as BLSCurve;
 pub use aggregates::{AggregatePublicKey, AggregateSignature};
 pub use errors::DecodeError;
 pub use keys::{Keypair, PublicKey, SecretKey};
-pub use signature::{Signature, Message};
+pub use signature::Signature;

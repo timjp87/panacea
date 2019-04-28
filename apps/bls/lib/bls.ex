@@ -8,6 +8,7 @@ defmodule Bls do
   def add(_a, _b), do: :erlang.nif_error(:nif_not_loaded)
   def new_kp(), do: :erlang.nif_error(:nif_not_loaded)
   def sign(_msg, _d, _sk), do: :erlang.nif_error(:nif_not_loaded)
+  def verify(_sig, _msg, _d, _pk), do: :erlang.nif_error(:nif_not_loaded)
 
   defmodule Signature do
     @moduledoc """
@@ -21,6 +22,26 @@ defmodule Bls do
 
     def sign(msg, d, sk) when is_number(msg), do: msg |> Enum.into([] |> Bls.sign(d, sk))
     def sign(msg, d, sk), do: Bls.sign(msg, d, sk)
+
+    # def verify(sig, msg, d, pk) when is_atom(msg), do
+    #   msg = :binary.bin_to_list msg
+    #   Bls.verify(sig, msg, d, pk)
+    # end
+    # def verify(sig, msg, d, pk) when is_binary(msg), do
+    #   msg = :binary.bin_to_list msg
+    #   Bls.verify(sig, msg, d, pk)
+    # end
+
+    # def verify(sig, msg, d, pk) when is_bitstring(msg), do
+    #   msg = :binary.bin_to_list msg
+    #   Bls.verify(sig, msg, d, pk)
+    # end
+
+    # def verify(sig, msg, d, pk) when is_number(msg), do
+    #   msg = Enum.into [] msg
+    #   Bls.verify(sig, msg, d, pk)
+    # end
+    def verify(sig, msg, d, pk), do: Bls.verify(sig, msg, d, pk)
   end
 
   defmodule Keys do
