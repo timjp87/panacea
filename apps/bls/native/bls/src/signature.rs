@@ -6,38 +6,33 @@ use super::g2::G2Point;
 use super::keys::{PublicKey, SecretKey};
 
 use rustler::{Env, Term, NifResult, Encoder};
-
-mod atoms {
-    rustler_atoms! {
-        atom ok;
-        //atom error;
-        //atom __true__ = "true";
-        //atom __false__ = "false";
-    }
-}
+use rustler::resource::ResourceArc;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Signature {
     pub point: G2Point,
 }
 
+pub struct Buffer {
+	pub data: Vec<u8>,
+}
+
 impl Signature {
-    // Test for rustler
-    pub fn mult<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    let num1: i64 = args[0].decode()?;
-    let num2: i64 = args[1].decode()?;
 
-    Ok((atoms::ok(), num1 * num2).encode(env))
-    }
-
-    /// Instantiate a new Signature from a message and a SecretKey.
-    pub fn new(msg: &[u8], d: u64, sk: &SecretKey) -> Self {
-        let hash_point = hash_on_g2(msg, d);
+    // Instantiate a new Signature from a message and a SecretKey.
+    pub fn new<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+    //pub fn new(msg: &[u8], d: u64, sk: &SecretKey) -> Self {
+        let sk: ResourceArc<SecretKey> = args[2].decode()?;
+        let d: u64 = args[1].decode()?;
+        let msg: str = args[0].decode()?;
+        let hash_point = hash_on_g2(&msg, d);
         let mut sig = hash_point.mul(&sk.x);
         sig.affine();
-        Self {
-            point: G2Point::from_raw(sig),
-        }
+        // Self {
+        //     point: G2Point::from_raw(sig),
+        // }
+        let signature = ResourceArc::new(Signature{point: G2Point::from_raw(sig)});
+        Ok((signature).encode(env))
     }
 
     /// Instantiate a new Signature from a message and a SecretKey, where the message has already

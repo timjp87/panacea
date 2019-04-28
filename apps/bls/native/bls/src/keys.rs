@@ -8,6 +8,7 @@ use super::rng::get_seeded_rng;
 use std::fmt;
 
 use rustler::{Env, Term, NifResult, Encoder};
+use rustler::resource::ResourceArc;
 
 mod atoms {
     rustler_atoms! {
@@ -152,14 +153,13 @@ pub struct Keypair {
 }
 
 impl Keypair {
-    // TODO
     // Instantiate a Keypair using SecretKey::random().
-    // pub fn random<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    pub fn random() -> Self {
+    pub fn random<'a>(env: Env<'a>, _args: &[Term<'a>]) -> NifResult<Term<'a>> {
         let sk = SecretKey::random();
         let pk = PublicKey::from_secret_key(&sk);
-        Keypair { sk, pk }
-        // Ok((atoms::ok(), sk, pk).encode(env))
+        let pk = ResourceArc::new(pk);
+        let sk = ResourceArc::new(sk);
+        Ok((sk, pk).encode(env))
     }
 }
 

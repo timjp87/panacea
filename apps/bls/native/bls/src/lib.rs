@@ -5,15 +5,25 @@ extern crate rustler_codegen;
 #[macro_use] extern crate lazy_static;
 extern crate rand;
 
-use rustler::{Env, Term, NifResult, Encoder};
+use rustler::{Env, Term};
 
 rustler_export_nifs! {
     "Elixir.Bls",
     [
-    ("add", 2, add),
-    //("new_keypair", 0, Keypair::random)
+    ("new_kp", 0, Keypair::random),
+    ("sign", 3, Signature::new)
     ],
-    None
+    Some(on_load)
+}
+
+fn on_load(env: Env, _info: Term) -> bool {
+    resource_struct_init!(PublicKey, env);
+    resource_struct_init!(SecretKey, env);
+    resource_struct_init!(Signature, env);
+    resource_struct_init!(Keypair, env);
+    resource_struct_init!(AggregatePublicKey, env);
+    resource_struct_init!(AggregateSignature, env);
+    true
 }
 
 mod atoms {
@@ -39,10 +49,3 @@ pub use aggregates::{AggregatePublicKey, AggregateSignature};
 pub use errors::DecodeError;
 pub use keys::{Keypair, PublicKey, SecretKey};
 pub use signature::Signature;
-
-fn add<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    let num1: i64 = args[0].decode()?;
-    let num2: i64 = args[1].decode()?;
-
-    Ok((atoms::ok(), num1 + num2).encode(env))
-}

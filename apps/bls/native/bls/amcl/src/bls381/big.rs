@@ -38,7 +38,7 @@ pub const NEXCESS:isize = (1<<((arch::CHUNK)-BASEBITS-1));
 pub const BIGBITS:usize = (MODBYTES*8);
 
 
-#[derive(Copy)]
+#[derive(Copy, Debug)]
 pub struct BIG {
     pub w: [Chunk; NLEN]
 }

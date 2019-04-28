@@ -6,6 +6,16 @@ defmodule Bls do
 
   # When your NIF is loaded, it will override this function.
   def add(_a, _b), do: :erlang.nif_error(:nif_not_loaded)
+  def new_kp(), do: :erlang.nif_error(:nif_not_loaded)
+
+  defmodule Keypair do
+    defstruct [:secret_key, :public_key]
+
+    def new() do
+      {sk, pk} = Bls.new_kp()
+      %Keypair{secret_key: sk, public_key: pk}
+    end
+  end
 
   def hello() do
     :world
