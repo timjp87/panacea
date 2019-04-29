@@ -33,6 +33,14 @@ impl SecretKey {
         SecretKey { x }
     }
 
+    // Exportable function to generate a random secret key.
+    pub fn random_nif<'a>(env: Env<'a>, _args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let mut r = get_seeded_rng(256);
+        let x = BigNum::randomnum(&BigNum::new_ints(&CURVE_ORDER), &mut r);
+        let sk = ResourceArc::new(SecretKey { x });
+        Ok((sk).encode(env))
+    }
+
     /// Instantiate a SecretKey from existing bytes.
     pub fn from_bytes(bytes: &[u8]) -> Result<SecretKey, DecodeError> {
         if bytes.len() != MOD_BYTE_SIZE {

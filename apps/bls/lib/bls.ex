@@ -9,6 +9,7 @@ defmodule Bls do
   def new_kp(), do: :erlang.nif_error(:nif_not_loaded)
   def sign(_msg, _d, _sk), do: :erlang.nif_error(:nif_not_loaded)
   def verify(_sig, _msg, _d, _pk), do: :erlang.nif_error(:nif_not_loaded)
+  def new_sk(), do: :erlang.nif_error(:nif_not_loaded)
 
   defmodule Signature do
     @moduledoc """

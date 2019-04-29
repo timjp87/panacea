@@ -12,7 +12,8 @@ rustler_export_nifs! {
     [
     ("new_kp", 0, Keypair::random),
     ("sign", 3, Signature::new),
-    ("verify", 4, Signature::verify)
+    ("verify", 4, Signature::verify),
+    ("new_sk",0, SecretKey::random_nif)
     ],
     Some(on_load)
 }
