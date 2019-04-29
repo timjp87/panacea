@@ -23,24 +23,26 @@ defmodule Bls do
     def sign(msg, d, sk) when is_number(msg), do: msg |> Enum.into([] |> Bls.sign(d, sk))
     def sign(msg, d, sk), do: Bls.sign(msg, d, sk)
 
-    # def verify(sig, msg, d, pk) when is_atom(msg), do
-    #   msg = :binary.bin_to_list msg
-    #   Bls.verify(sig, msg, d, pk)
-    # end
-    # def verify(sig, msg, d, pk) when is_binary(msg), do
-    #   msg = :binary.bin_to_list msg
-    #   Bls.verify(sig, msg, d, pk)
-    # end
+    def verify(sig, msg, d, pk) when is_atom(msg) do
+      msg = :binary.bin_to_list(msg)
+      Bls.verify(sig, msg, d, pk)
+    end
 
-    # def verify(sig, msg, d, pk) when is_bitstring(msg), do
-    #   msg = :binary.bin_to_list msg
-    #   Bls.verify(sig, msg, d, pk)
-    # end
+    def verify(sig, msg, d, pk) when is_binary(msg) do
+      msg = :binary.bin_to_list(msg)
+      Bls.verify(sig, msg, d, pk)
+    end
 
-    # def verify(sig, msg, d, pk) when is_number(msg), do
-    #   msg = Enum.into [] msg
-    #   Bls.verify(sig, msg, d, pk)
-    # end
+    def verify(sig, msg, d, pk) when is_bitstring(msg) do
+      msg = :binary.bin_to_list(msg)
+      Bls.verify(sig, msg, d, pk)
+    end
+
+    def verify(sig, msg, d, pk) when is_number(msg) do
+      msg = Enum.into(msg, [])
+      Bls.verify(sig, msg, d, pk)
+    end
+
     def verify(sig, msg, d, pk), do: Bls.verify(sig, msg, d, pk)
   end
 
