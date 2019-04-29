@@ -15,7 +15,8 @@ rustler_export_nifs! {
     ("verify", 4, Signature::verify),
     ("new_sk",0, SecretKey::random_nif),
     ("new_sk_from_bytes", 1, SecretKey::from_bytes_nif),
-    ("sk_to_bytes", 1, SecretKey::as_bytes_nif)
+    ("sk_to_bytes", 1, SecretKey::as_bytes_nif),
+    ("pk_from_sk", 1, PublicKey::from_secret_key_nif)
     ],
     Some(on_load)
 }

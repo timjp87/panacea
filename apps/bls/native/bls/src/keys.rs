@@ -117,6 +117,15 @@ impl PublicKey {
         }
     }
 
+    /// Instantiate a PublicKey from some SecretKey.
+    pub fn from_secret_key_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let sk: ResourceArc<SecretKey> = args[0].decode()?;
+        let pk = ResourceArc::new(PublicKey {
+            point: G1Point::from_raw(GENERATORG1.mul(&sk.x)),
+        });
+        Ok((pk).encode(env))
+    }
+
     /// Instantiate a PublicKey from some GroupG1 point.
     pub fn new_from_raw(pt: &GroupG1) -> Self {
         PublicKey {
