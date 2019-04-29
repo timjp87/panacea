@@ -9,16 +9,39 @@ defmodule Bls do
   def new_kp(), do: :erlang.nif_error(:nif_not_loaded)
   def sign(_msg, _d, _sk), do: :erlang.nif_error(:nif_not_loaded)
   def verify(_sig, _msg, _d, _pk), do: :erlang.nif_error(:nif_not_loaded)
+  def asig_verify(_asig, _msg, _d, _agpk), do: :erlang.nif_error(:nif_not_loaded)
   def new_sk(), do: :erlang.nif_error(:nif_not_loaded)
   def new_sk_from_bytes(_bytes), do: :erlang.nif_error(:nif_not_loaded)
   def sk_to_bytes(_pk), do: :erlang.nif_error(:nif_not_loaded)
   def pk_from_sk(_sk), do: :erlang.nif_error(:nif_not_loaded)
   def pk_to_bytes(_pk), do: :erlang.nif_error(:nif_not_loaded)
+  def asig_new(), do: :erlang.nif_error(:nif_not_loaded)
+  def asig_add(_asig, _sig), do: :erlang.nif_error(:nif_not_loaded)
+  def asig_to_bytes(_asig), do: :erlang.nif_error(:nif_not_loaded)
+  def agpk_new(), do: :erlang.nif_error(:nif_not_loaded)
 
   defmodule Signature do
     @moduledoc """
-    Module for signing, aggregating and verifying BLS signatures.
+    Module for signing and verifying BLS signatures.
     """
+
+    defmodule Aggregate do
+      @moduledoc """
+      Functions for aggregating signatures and verifying them.
+      """
+      def new() do
+        Bls.asig_new()
+      end
+
+      def to_bytes(asig) do
+        Bls.asig_to_bytes(asig)
+      end
+
+      def add(asig, sig) do
+        Bls.asig_add(asig, sig)
+      end
+    end
+
     def sign(msg, d, sk) when is_atom(msg), do: msg |> Atom.to_charlist() |> Bls.sign(d, sk)
     def sign(msg, d, sk) when is_binary(msg), do: msg |> :binary.bin_to_list() |> Bls.sign(d, sk)
 
@@ -53,8 +76,14 @@ defmodule Bls do
 
   defmodule Keys do
     @moduledoc """
-    Module for generating public and private keys in various ways.
+    Module for generating public and secret keys in various ways.
     """
+    defmodule AggregatePublicKey do
+      def new() do
+        Bls.agpk_new()
+      end
+    end
+
     defmodule PublicKey do
       @moduledoc """
       Lets you derive a public key from a secret key and export it.

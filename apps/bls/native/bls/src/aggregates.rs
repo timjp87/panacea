@@ -7,6 +7,17 @@ use super::g2::G2Point;
 use super::keys::PublicKey;
 use super::signature::Signature;
 
+use rustler::{Env, Term, NifResult, Encoder};
+use rustler::resource::ResourceArc;
+
+mod atoms {
+    rustler_atoms! {
+        atom ok;
+        atom __false__ = "false";
+        atom __true__ = "true";
+    }
+}
+
 /// Allows for the adding/combining of multiple BLS PublicKeys.
 ///
 /// This may be used to verify some AggregateSignature.
@@ -24,6 +35,14 @@ impl AggregatePublicKey {
         // TODO: check why this inf call
         point.inf();
         Self { point }
+    }
+
+    pub fn new_nif<'a>(env: Env<'a>, _args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let mut point = G1Point::new();
+        // TODO: check why this inf call
+        point.inf();
+        let agp = ResourceArc::new(AggregatePublicKey{ point });
+        Ok((agp).encode(env))
     }
 
     /// Instantiate a new aggregate public key from a vector of PublicKeys.
@@ -85,12 +104,29 @@ impl AggregateSignature {
         point.inf();
         Self { point }
     }
+    
+    /// Exportable NIF
+    pub fn new_nif<'a>(env: Env<'a>, _args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let mut point = G2Point::new();
+        point.inf();
+        let asig = ResourceArc::new(AggregateSignature { point });
+        Ok((asig).encode(env))
+    }
 
     /// Add a Signature to the AggregateSignature.
     pub fn add(&mut self, signature: &Signature) {
         self.point.add(&signature.point);
         self.point.affine();
     }
+
+    /// Add a Signature to the AggregateSignature.
+    // pub fn add_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+    //     let asig: ResourceArc<AggregateSignature> = args[0].decode()?;
+    //     let sig: ResourceArc<Signature> = args[1].decode()?;
+    //     asig.point.add(&sig.point);
+    //     asig.point.affine();
+    //     Ok((atoms::ok()).encode(env))
+    // }
 
     /// Add a AggregateSignature to the AggregateSignature.
     pub fn add_aggregate(&mut self, aggregate_signature: &AggregateSignature) {
@@ -112,6 +148,26 @@ impl AggregateSignature {
         let mut lhs = ate_pairing(sig_point.as_raw(), &GENERATORG1);
         let mut rhs = ate_pairing(&msg_hash_point, &key_point.as_raw());
         lhs.equals(&mut rhs)
+    }
+
+    // Exportable verify.
+    pub fn verify_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let asig: ResourceArc<AggregateSignature> = args[0].decode()?;
+        let msg: Vec<u8> = args[1].decode()?;
+        let d: u64 = args[2].decode()?;
+        let agpk: ResourceArc<AggregatePublicKey> = args[3].decode()?; 
+        let mut sig_point = asig.point.clone();
+        let mut key_point = agpk.point.clone();
+        sig_point.affine();
+        key_point.affine();
+        let mut msg_hash_point = hash_on_g2(&msg, d);
+        msg_hash_point.affine();
+        let mut lhs = ate_pairing(sig_point.as_raw(), &GENERATORG1);
+        let mut rhs = ate_pairing(&msg_hash_point, &key_point.as_raw());
+        match lhs.equals(&mut rhs) {
+            true => Ok((atoms::__true__()).encode(env)),
+            false => Ok((atoms::__false__()).encode(env)),
+        }
     }
 
     /// Verify this AggregateSignature against multiple AggregatePublickeys with multiple Messages.
@@ -156,6 +212,13 @@ impl AggregateSignature {
     pub fn as_bytes(&self) -> Vec<u8> {
         let mut clone = self.point.clone();
         clone.as_bytes()
+    }
+
+    /// NIF Export (serialize) the AggregateSignature to bytes.
+    pub fn as_bytes_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let asig: ResourceArc<AggregateSignature> = args[0].decode()?;
+        let mut clone = asig.point.clone();
+        Ok((clone.as_bytes()).encode(env))
     }
 }
 

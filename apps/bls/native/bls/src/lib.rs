@@ -18,6 +18,11 @@ rustler_export_nifs! {
     ("sk_to_bytes", 1, SecretKey::as_bytes_nif),
     ("pk_from_sk", 1, PublicKey::from_secret_key_nif),
     ("pk_to_bytes", 1, PublicKey::as_bytes_nif),
+    ("asig_new", 0, AggregateSignature::new_nif),
+    //("asig_add", 1, AggregateSignature::add_nif),
+    ("asig_verify", 4, AggregateSignature::verify_nif),
+    ("asig_to_bytes", 1, AggregateSignature::as_bytes_nif),
+    ("agpk_new", 0, AggregatePublicKey::new_nif)
     ],
     Some(on_load)
 }
