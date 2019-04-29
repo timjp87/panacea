@@ -11,6 +11,7 @@ defmodule Bls do
   def verify(_sig, _msg, _d, _pk), do: :erlang.nif_error(:nif_not_loaded)
   def new_sk(), do: :erlang.nif_error(:nif_not_loaded)
   def new_sk_from_bytes(_bytes), do: :erlang.nif_error(:nif_not_loaded)
+  def sk_to_bytes(_pk), do: :erlang.nif_error(:nif_not_loaded)
 
   defmodule Signature do
     @moduledoc """
@@ -68,6 +69,10 @@ defmodule Bls do
 
       def from_bytes(bytes) do
         bytes |> Bls.new_sk_from_bytes()
+      end
+
+      def as_bytes(pk) do
+        Bls.sk_to_bytes(pk)
       end
     end
 

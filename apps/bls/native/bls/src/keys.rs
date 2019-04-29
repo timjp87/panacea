@@ -76,6 +76,15 @@ impl SecretKey {
         temp.tobytes(&mut bytes);
         bytes.to_vec()
     }
+
+    /// Export the SecretKey to bytes.
+    pub fn as_bytes_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let sk: ResourceArc<SecretKey> = args[0].decode()?;
+        let mut temp = BigNum::new_copy(&sk.x);
+        let mut bytes: [u8; MOD_BYTE_SIZE] = [0; MOD_BYTE_SIZE];
+        temp.tobytes(&mut bytes);
+        Ok((bytes.to_vec()).encode(env))
+    }
 }
 
 impl fmt::Debug for SecretKey {
