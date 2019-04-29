@@ -27,14 +27,6 @@ fn on_load(env: Env, _info: Term) -> bool {
     true
 }
 
-mod atoms {
-    rustler_atoms! {
-        atom ok;
-        //atom error;
-        //atom __true__ = "true";
-        //atom __false__ = "false";
-    }
-}
 mod aggregates;
 mod amcl_utils;
 mod errors;
