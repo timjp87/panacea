@@ -10,6 +10,7 @@ defmodule Bls do
   def sign(_msg, _d, _sk), do: :erlang.nif_error(:nif_not_loaded)
   def verify(_sig, _msg, _d, _pk), do: :erlang.nif_error(:nif_not_loaded)
   def new_sk(), do: :erlang.nif_error(:nif_not_loaded)
+  def new_sk_from_bytes(_bytes), do: :erlang.nif_error(:nif_not_loaded)
 
   defmodule Signature do
     @moduledoc """
@@ -51,6 +52,25 @@ defmodule Bls do
     @moduledoc """
     Module for generating public and private keys in various ways.
     """
+
+    defmodule SecretKey do
+      @moduledoc """
+      Lets you create new secret key from randomness or seeded with 48 bytes.
+      """
+
+      def new() do
+        Bls.new_sk()
+      end
+
+      def from_bytes(bytes) when is_binary(bytes) do
+        bytes |> :binary.bin_to_list() |> Bls.new_sk_from_bytes()
+      end
+
+      def from_bytes(bytes) do
+        bytes |> Bls.new_sk_from_bytes()
+      end
+    end
+
     defmodule Keypair do
       @moduledoc """
       Module for generating a new keypair.

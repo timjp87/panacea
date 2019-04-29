@@ -6,6 +6,7 @@ use super::errors::DecodeError;
 use super::g1::G1Point;
 use super::rng::get_seeded_rng;
 use std::fmt;
+use std::cmp::Ordering;
 
 use rustler::{Env, Term, NifResult, Encoder};
 use rustler::resource::ResourceArc;
@@ -13,6 +14,7 @@ use rustler::resource::ResourceArc;
 mod atoms {
     rustler_atoms! {
         atom ok;
+        atom incorect_size;
         //atom error;
         //atom __true__ = "true";
         //atom __false__ = "false";
@@ -33,7 +35,7 @@ impl SecretKey {
         SecretKey { x }
     }
 
-    // Exportable function to generate a random secret key.
+    /// Exportable function to generate a random secret key.
     pub fn random_nif<'a>(env: Env<'a>, _args: &[Term<'a>]) -> NifResult<Term<'a>> {
         let mut r = get_seeded_rng(256);
         let x = BigNum::randomnum(&BigNum::new_ints(&CURVE_ORDER), &mut r);
@@ -49,6 +51,22 @@ impl SecretKey {
         Ok(SecretKey {
             x: BigNum::frombytes(bytes),
         })
+    }
+
+    /// Exportable function to instantiate Secret Key from existing bytes.
+    pub fn from_bytes_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let bytes: Vec<u8> = args[0].decode()?;
+        match bytes.len().cmp(&MOD_BYTE_SIZE) {
+            Ordering::Less => Ok((atoms::incorect_size(), format!("Need at least 48 Bytes")).encode(env)),
+            Ordering::Greater => {
+                let sk = ResourceArc::new(SecretKey {x: BigNum::frombytes(&bytes)});
+                Ok((atoms::ok(), sk).encode(env))
+            },
+            Ordering::Equal => {
+                let sk = ResourceArc::new(SecretKey {x: BigNum::frombytes(&bytes)});
+                Ok((atoms::ok(), sk).encode(env))
+            },
+        }
     }
 
     /// Export the SecretKey to bytes.
