@@ -13,6 +13,7 @@ defmodule Bls do
   def new_sk_from_bytes(_bytes), do: :erlang.nif_error(:nif_not_loaded)
   def sk_to_bytes(_pk), do: :erlang.nif_error(:nif_not_loaded)
   def pk_from_sk(_sk), do: :erlang.nif_error(:nif_not_loaded)
+  def pk_to_bytes(_pk), do: :erlang.nif_error(:nif_not_loaded)
 
   defmodule Signature do
     @moduledoc """
@@ -60,6 +61,10 @@ defmodule Bls do
       """
       def from_sk(sk) do
         Bls.pk_from_sk(sk)
+      end
+
+      def to_bytes(pk) do
+        Bls.pk_to_bytes(pk)
       end
     end
 

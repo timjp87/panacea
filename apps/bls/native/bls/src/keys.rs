@@ -145,6 +145,13 @@ impl PublicKey {
         clone.as_bytes()
     }
 
+    /// Export the PublicKey to compressed bytes.
+    pub fn as_bytes_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let pk: ResourceArc<PublicKey> = args[0].decode()?;
+        let mut clone = pk.point.clone();
+        Ok((clone.as_bytes()).encode(env))
+    }
+
     /// Export the public key to uncompress (x, y) bytes
     pub fn as_uncompressed_bytes(&mut self) -> Vec<u8> {
         if self.point.is_infinity() {
