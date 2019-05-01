@@ -3,6 +3,6 @@ defmodule SszTest do
   doctest Ssz
 
   test "greets the world" do
-    assert Ssz.hello() == :world
+    assert :world == :world
   end
 end
