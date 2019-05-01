@@ -17,14 +17,13 @@ defmodule Bls do
   def pk_to_bytes(_pk), do: :erlang.nif_error(:nif_not_loaded)
   def asig_new(), do: :erlang.nif_error(:nif_not_loaded)
   def asig_add(_asig, _sig), do: :erlang.nif_error(:nif_not_loaded)
-  def asig_add_aggregate_nif(_asig1, _asig2), do: :erlang.nif_error(:nif_not_loaded)
+  def asig_add_aggregate(_asig1, _asig2), do: :erlang.nif_error(:nif_not_loaded)
   def asig_to_bytes(_asig), do: :erlang.nif_error(:nif_not_loaded)
   def agpk_new(), do: :erlang.nif_error(:nif_not_loaded)
-  def add_aggregate_nif(_agpk, _new_agpk), do: :erlang.nif_error(:nif_not_loaded)
-  @spec agpk_to_bytes(any()) :: any()
   def agpk_to_bytes(_agpk), do: :erlang.nif_error(:nif_not_loaded)
   def agpk_add(_agpk, _pk), do: :erlang.nif_error(:nif_not_loaded)
   def agpk_from_bytes(_bytes), do: :erlang.nif_error(:nif_not_loaded)
+  def agpk_add_aggregate(_agpk1, _agpk2), do: :erlang.nif_error(:nif_not_loaded)
 
   defmodule Signature do
     @moduledoc """
@@ -48,7 +47,7 @@ defmodule Bls do
       end
 
       def add_aggregate(asig1, asig2) do
-        Bls.asig_add_aggregate_nif(asig1, asig2)
+        Bls.asig_add_aggregate(asig1, asig2)
       end
     end
 
@@ -95,6 +94,10 @@ defmodule Bls do
 
       def add(agpk, pk) do
         Bls.agpk_add(agpk, pk)
+      end
+
+      def add_aggregate(agpk1, agpk2) do
+        Bls.agpk_add_aggregate(agpk1, agpk2)
       end
 
       def to_bytes(agpk) do

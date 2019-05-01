@@ -24,7 +24,8 @@ rustler_export_nifs! {
     ("asig_to_bytes", 1, AggregateSignature::as_bytes_nif),
     ("agpk_new", 0, AggregatePublicKey::new_nif),
     ("agpk_add", 2, AggregatePublicKey::add_nif),
-    ("asig_add_aggregate_nif", 2, AggregateSignature::add_aggregate_nif),
+    ("asig_add_aggregate", 2, AggregateSignature::add_aggregate_nif),
+    ("agpk_add_aggregate", 2, AggregatePublicKey::add_aggregate_nif),
     ("agpk_to_bytes", 1, AggregatePublicKey::as_bytes_nif),
     ("agpk_from_bytes", 1, AggregatePublicKey::from_bytes_nif)
     ],

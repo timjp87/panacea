@@ -80,13 +80,15 @@ impl AggregatePublicKey {
     }
 
     /// Exported Version
-    // pub fn add_aggregate_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    //     let agpk: ResourceArc<AggregatePublicKey> = args[0].decode()?;
-    //     let new_agpk: ResourceArc<AggregatePublicKey> = args[1].decode()?;
-    //     agpk.point.add(&new_agpk.point);
-    //     agpk.point.affine();
-    //     Ok((atoms::ok()).encode(env))
-    // }
+    pub fn add_aggregate_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let agpk: ResourceArc<AggregatePublicKey> = args[0].decode()?;
+        let new_agpk: ResourceArc<AggregatePublicKey> = args[1].decode()?;
+        let mut agpk_point = agpk.point.clone();
+        agpk_point.add(&new_agpk.point);
+        agpk_point.affine();
+        let agpk = ResourceArc::new(AggregatePublicKey{point: agpk_point});
+        Ok((agpk).encode(env))
+    }
 
     /// Instantiate an AggregatePublicKey from compressed bytes.
     pub fn from_bytes_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
