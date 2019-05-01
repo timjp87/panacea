@@ -76,7 +76,7 @@ defmodule BlsTest do
     keypair = Bls.Keys.Keypair.new()
     message = 'The quick brown fox jumps over the lazy dog'
     d = 1
-    bytes = Bls.Keys.SecretKey.as_bytes(keypair.secret_key)
+    bytes = Bls.Keys.SecretKey.to_bytes(keypair.secret_key)
     {_result, secret_key} = Bls.Keys.SecretKey.from_bytes(bytes)
     sig = Bls.Signature.sign(message, d, secret_key)
     assert Bls.Signature.verify(sig, message, d, keypair.public_key)
