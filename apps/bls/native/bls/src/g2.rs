@@ -3,7 +3,7 @@ use super::errors::DecodeError;
 use std::fmt;
 
 pub struct G2Point {
-    point: GroupG2,
+    pub point: GroupG2,
 }
 
 impl G2Point {

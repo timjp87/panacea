@@ -62,6 +62,17 @@ impl AggregatePublicKey {
         self.point.affine();
     }
 
+    /// Add a PublicKey to the AggregatePublicKey.
+    pub fn add_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let agpk: ResourceArc<AggregatePublicKey> = args[0].decode()?;
+        let pk: ResourceArc<PublicKey> = args[1].decode()?;
+        let mut agpk_point = agpk.point.clone();
+        agpk_point.add(&pk.point);
+        agpk_point.affine();
+        let agpk = ResourceArc::new(AggregatePublicKey{point: agpk_point});
+        Ok((agpk).encode(env))
+    }
+
     /// Add a AggregatePublicKey to the AggregatePublicKey.
     pub fn add_aggregate(&mut self, aggregate_public_key: &AggregatePublicKey) {
         self.point.add(&aggregate_public_key.point);
@@ -132,18 +143,33 @@ impl AggregateSignature {
     }
 
     /// Add a Signature to the AggregateSignature.
-    // pub fn add_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    //     let asig: ResourceArc<AggregateSignature> = args[0].decode()?;
-    //     let sig: ResourceArc<Signature> = args[1].decode()?;
-    //     asig.point.add(&sig.point);
-    //     asig.point.affine();
-    //     Ok((atoms::ok()).encode(env))
-    // }
+    /// TODO: Not sure why I can't mutate the reference passed to this function instead I
+    /// have to return a new AggregateSignature. This will probably hurt performance.
+    pub fn add_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let asig: ResourceArc<AggregateSignature> = args[0].decode()?;
+        let sig: ResourceArc<Signature> = args[1].decode()?;
+        let mut asig_point = asig.point.clone();
+        asig_point.add(&sig.point);
+        asig_point.affine();
+        let asig = ResourceArc::new(AggregateSignature{point: asig_point});
+        Ok((asig).encode(env))
+    }
 
     /// Add a AggregateSignature to the AggregateSignature.
     pub fn add_aggregate(&mut self, aggregate_signature: &AggregateSignature) {
         self.point.add(&aggregate_signature.point);
         self.point.affine();
+    }
+
+    // Add a AggregateSignature to the AggregateSignature.
+    pub fn add_aggregate_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let asig1: ResourceArc<AggregateSignature> = args[0].decode()?;
+        let mut asig_point = asig1.point.clone();
+        let asig2: ResourceArc<AggregateSignature> = args[1].decode()?;
+        asig_point.add(&asig2.point);
+        asig_point.affine();
+        let asig = ResourceArc::new(AggregateSignature{point: asig_point});
+        Ok((asig).encode(env))
     }
 
     /// Verify this AggregateSignature against an AggregatePublicKey.
