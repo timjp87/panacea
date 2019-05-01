@@ -49,6 +49,10 @@ defmodule Bls do
       def add_aggregate(asig1, asig2) do
         Bls.asig_add_aggregate(asig1, asig2)
       end
+
+      def verify(asig, msg, d, agpk) do
+        Bls.asig_verify(asig, msg, d, agpk)
+      end
     end
 
     def sign(msg, d, sk) when is_atom(msg), do: msg |> Atom.to_charlist() |> Bls.sign(d, sk)
