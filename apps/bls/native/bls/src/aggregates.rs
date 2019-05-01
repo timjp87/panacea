@@ -68,16 +68,28 @@ impl AggregatePublicKey {
         self.point.affine();
     }
 
+    /// Exported Version
+    // pub fn add_aggregate_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+    //     let agpk: ResourceArc<AggregatePublicKey> = args[0].decode()?;
+    //     let new_agpk: ResourceArc<AggregatePublicKey> = args[1].decode()?;
+    //     agpk.point.add(&new_agpk.point);
+    //     agpk.point.affine();
+    //     Ok((atoms::ok()).encode(env))
+    // }
+
     /// Instantiate an AggregatePublicKey from compressed bytes.
-    pub fn from_bytes(bytes: &[u8]) -> Result<AggregatePublicKey, DecodeError> {
-        let point = G1Point::from_bytes(bytes)?;
-        Ok(Self { point })
+    pub fn from_bytes_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let bytes: Vec<u8> = args[0].decode()?;
+        let point = G1Point::from_bytes(&bytes).unwrap();
+        let agpk = ResourceArc::new(AggregatePublicKey{point});
+        Ok((agpk).encode(env))
     }
 
     /// Export the AggregatePublicKey to compressed bytes.
-    pub fn as_bytes(&self) -> Vec<u8> {
-        let mut clone = self.point.clone();
-        clone.as_bytes()
+    pub fn as_bytes_nif<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+        let agpk: ResourceArc<AggregatePublicKey> = args[0].decode()?;
+        let mut clone = agpk.point.clone();
+        Ok((clone.as_bytes()).encode(env))
     }
 }
 
