@@ -36,7 +36,7 @@ defmodule Beaconchain.MixProject do
       {:protobuf, "~> 0.6.1"},
       {:cachex, "~> 3.1"},
       {:ranch, "~> 1.6"},
-      {:exw3, git: "https://github.com/hswick/exw3.git", branch: "master"},
+      {:exw3, "~> 0.4.3"},
       {:typed_struct, "~> 0.1.4"}
     ]
   end
