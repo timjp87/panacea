@@ -20,7 +20,7 @@ defmodule Mix.Tasks.Deploy do
     Logger.info("Started contract manager.")
     abi = ExW3.load_abi("apps/beaconchain/lib/mix/tasks/DepositContract.abi")
     Logger.info("Loaded contract ABI.")
-    ExW3.Contract.register(:DepositContract, abi)
+    ExW3.Contract.register(:DepositContract, abi: abi)
     Logger.info("Contract registered.")
 
     {:ok, address, tx_hash} =
