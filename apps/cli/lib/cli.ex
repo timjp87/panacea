@@ -6,6 +6,7 @@ defmodule Cli do
 
   def start(_type, _arg) do
     children = [
+      {Beaconchain.Eth1Listener, []},
       {Beaconchain.Db, []}
     ]
 
