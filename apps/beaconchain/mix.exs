@@ -37,6 +37,8 @@ defmodule Beaconchain.MixProject do
       {:cachex, "~> 3.1"},
       {:ranch, "~> 1.6"},
       {:exw3, "~> 0.4.3"},
+      {:exth_crypto, "~> 0.1.6"},
+      {:libp2p, github: "helium/erlang-libp2p"},
       {:typed_struct, "~> 0.1.4"}
     ]
   end
