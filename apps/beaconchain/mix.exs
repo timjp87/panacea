@@ -19,7 +19,7 @@ defmodule Beaconchain.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      applications: [:ethereumex, :grpc],
+      applications: [:ethereumex, :libp2p],
       extra_applications: [:logger]
     ]
   end
@@ -27,18 +27,8 @@ defmodule Beaconchain.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
-      # {:sibling_app_in_umbrella, in_umbrella: true}
-      {:yamerl, "~> 0.7.0"},
-      {:horde, "~> 0.4.0-rc.2"},
-      {:grpc, "~> 0.3.1"},
-      {:protobuf, "~> 0.6.1"},
-      {:cachex, "~> 3.1"},
-      {:ranch, "~> 1.6"},
-      {:exw3, "~> 0.4.3"},
-      {:exth_crypto, "~> 0.1.6"},
-      {:libp2p, github: "helium/erlang-libp2p"},
+      {:exw3, "~> 0.4.4"},
+      {:libp2p, "~> 0.1.0"},
       {:typed_struct, "~> 0.1.4"}
     ]
   end
