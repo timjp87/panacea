@@ -6,6 +6,9 @@ config :ethereumex,
   client_type: :http,
   url: "http://localhost:8545"
 
+config :beaconchain,
+  deposit_contract_address: "0x6ff97d3312c87b24a3a2028d322ab13f700164dd"
+
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
 # file won't be loaded nor affect the parent project. For this reason,
