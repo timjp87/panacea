@@ -26,7 +26,7 @@ defmodule Validator.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:bls, "~> 0.1.0"}
+      {:bls, "~> 0.1.1"}
     ]
   end
 end
