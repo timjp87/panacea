@@ -29,6 +29,8 @@ defmodule Beaconchain.MixProject do
     [
       {:exw3, "~> 0.4.4"},
       {:libp2p, "~> 0.1.0"},
+      {:bls, "~> 0.1.1"},
+      {:ssz, git: "https://github.com/timjp87/elixir-ssz.git"},
       {:typed_struct, "~> 0.1.4"}
     ]
   end
