@@ -6,8 +6,8 @@ defmodule Cli do
 
   def start(_type, _arg) do
     children = [
-      {Beaconchain.Eth1Listener, []},
-      {Beaconchain.Db, []}
+      {Beacon.Eth1Listener, []},
+      {Beacon.Db, []}
     ]
 
     opts = [strategy: :one_for_one, name: Cli.Supervisor]

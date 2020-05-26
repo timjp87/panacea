@@ -1,4 +1,4 @@
-defmodule Beaconchain.State.Crosslink do
+defmodule Beacon.State.Crosslink do
   @moduledoc """
   Encodes crosslinks from shards in the beacon chain.
   """

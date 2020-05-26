@@ -1,10 +1,10 @@
-defmodule Beaconchain.State.BeaconchainState do
+defmodule Beacon.State.BeaconState do
   @moduledoc """
   This module implements the state of the beacon chain.
   """
   use TypedStruct
 
-  alias Beaconchain.State.{
+  alias Beacon.State.{
     Fork,
     Eth1Data,
     Block,

@@ -1,9 +1,9 @@
-defmodule Beaconchain.MixProject do
+defmodule Beacon.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :beaconchain,
+      app: :beacon,
       version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -29,6 +29,7 @@ defmodule Beaconchain.MixProject do
     [
       {:exw3, "~> 0.4.4"},
       {:libp2p, "~> 0.1.2"},
+      {:wasmex, "~> 0.2.0"},
       {:bls, "~> 0.1.1"},
       {:ssz, git: "https://github.com/timjp87/elixir-ssz.git"},
       {:typed_struct, "~> 0.1.4"}

@@ -1,10 +1,10 @@
-defmodule Beaconchain.State.Block do
+defmodule Beacon.State.Block do
   @moduledoc """
   Defines the structure of a beacon chain block and its methods.
   """
   use TypedStruct
 
-  alias Beaconchain.State.{
+  alias Beacon.State.{
     Eth1Data,
     Attestation,
     Transfer,

@@ -1,10 +1,10 @@
-defmodule Beaconchain.State.Deposit do
+defmodule Beacon.State.Deposit do
   @moduledoc """
   Defines a deposit.
   """
   use TypedStruct
 
-  alias Beaconchain.State.Deposit
+  alias Beacon.State.Deposit
 
   typedstruct do
     field(:proof, <<_::256>>, enforce: true)

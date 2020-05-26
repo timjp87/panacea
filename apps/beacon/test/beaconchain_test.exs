@@ -1,6 +1,6 @@
-defmodule BeaconchainTest do
+defmodule BeaconTest do
   use ExUnit.Case
-  doctest Beaconchain
+  doctest Beacon
 
   test "greets the world" do
     assert :world == :world

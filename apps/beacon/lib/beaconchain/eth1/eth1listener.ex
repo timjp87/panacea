@@ -1,4 +1,4 @@
-defmodule Beaconchain.Eth1Listener do
+defmodule Beacon.Eth1Listener do
   @moduledoc """
   Listens for log events on the validator registry contract on the Ethereum 1.0 chain.
   This will kick of the chainstart once the Genesis2 log has been emmited. Deposit logs

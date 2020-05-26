@@ -1,4 +1,4 @@
-defmodule Beaconchain.State.Validator do
+defmodule Beacon.State.Validator do
   @moduledoc """
   This module encodes the validator data structure.
   """

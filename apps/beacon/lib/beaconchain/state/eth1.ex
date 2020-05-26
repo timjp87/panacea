@@ -1,4 +1,4 @@
-defmodule Beaconchain.State.Eth1Data do
+defmodule Beacon.State.Eth1Data do
   use TypedStruct
 
   typedstruct do

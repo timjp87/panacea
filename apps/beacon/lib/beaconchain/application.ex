@@ -1,6 +1,6 @@
-defmodule Beaconchain.Application do
+defmodule Beacon.Application do
   @moduledoc """
-  Documentation for Beaconchain.
+  Documentation for Beacon.
   """
 
   use GenServer

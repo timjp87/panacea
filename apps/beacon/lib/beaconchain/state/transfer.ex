@@ -1,4 +1,4 @@
-defmodule Beaconchain.State.Transfer do
+defmodule Beacon.State.Transfer do
   @moduledoc """
   A Transfer in the Beacon Chain.
   """

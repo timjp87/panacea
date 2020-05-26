@@ -1,4 +1,4 @@
-defmodule Beaconchain.State.VoluntaryExit do
+defmodule Beacon.State.VoluntaryExit do
   @moduledoc """
   Encodes a voluntary exit of a validator in the beacon chain.
   """

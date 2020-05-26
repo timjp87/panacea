@@ -1,4 +1,4 @@
-defmodule Beaconchain.State.Fork do
+defmodule Beacon.State.Fork do
   use TypedStruct
 
   typedstruct do

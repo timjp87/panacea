@@ -1,10 +1,10 @@
-defmodule Beaconchain.State.Attestation do
+defmodule Beacon.State.Attestation do
   @moduledoc """
   This module defines an Attestiation in the beacon chain.
   """
   use TypedStruct
 
-  alias Beaconchain.State.Attestation
+  alias Beacon.State.Attestation
 
   typedstruct do
     field(:aggregation_bitfield, <<>>, enforce: true)

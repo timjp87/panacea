@@ -1,4 +1,4 @@
-defmodule Beaconchain.Db do
+defmodule Beacon.Db do
   @moduledoc """
   A server that runs our database and can be interacted with via GenServer calls.
   """

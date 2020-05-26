@@ -1,10 +1,10 @@
-defmodule Beaconchain.State.Slashing do
+defmodule Beacon.State.Slashing do
   @moduledoc """
   Defindes the behavior of the different slashing mechanisms.
   """
   use TypedStruct
 
-  alias Beaconchain.State.{Block, Attestation.IndexedAttestation}
+  alias Beacon.State.{Block, Attestation.IndexedAttestation}
 
   defmodule ProposerSlashing do
     @moduledoc """
