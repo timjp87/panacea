@@ -23,11 +23,11 @@ defmodule Panacea.MixProject do
   # Run "mix help deps" for examples and options.
   defp deps do
     [
-      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.4.0", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
       {:distillery, "~> 2.0"},
-      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},
-      {:benchee, "~> 0.9", only: :dev}
+      {:dialyxir, "~> 1.0.0", only: [:dev], runtime: false},
+      {:benchee, "~> 1.0", only: :dev}
     ]
   end
 end
