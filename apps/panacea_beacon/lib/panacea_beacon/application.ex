@@ -10,7 +10,8 @@ defmodule Beacon.Application do
     children = [
       # Start the endpoint when the application starts
       BeaconWeb.Endpoint,
-      CubDB.child_spec(System.user_home() <> "/.test")
+      CubDB.child_spec(System.user_home() <> "/.panacea"),
+      {Beacon.Network.P2P, []}
       # Starts a worker by calling: Beacon.Worker.start_link(arg)
       # {Beacon.Worker, arg},
     ]
