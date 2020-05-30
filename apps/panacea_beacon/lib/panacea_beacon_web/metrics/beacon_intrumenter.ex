@@ -1,4 +1,4 @@
- defmodule BeaconWeb.Metrics.BeaconInstrumenter do
+defmodule BeaconWeb.Metrics.BeaconInstrumenter do
   @moduledoc """
   Beaconchain metrics
   """
@@ -20,10 +20,8 @@
 
     Gauge.declare(
       name: :beacon_head_root,
-      help: "Root of the head block of the beacon chain.",
+      help: "Root of the head block of the beacon chain."
     )
-
-    Enum.
 
     Gauge.declare(
       name: :beacon_finalized_epoch,
@@ -67,17 +65,20 @@
 
     Gauge.declare(
       name: :beacon_current_live_validators,
-      help: "Number of active validators that successfully included attestation on chain for current epoch."
+      help:
+        "Number of active validators that successfully included attestation on chain for current epoch."
     )
 
     Gauge.declare(
       name: :beacon_previous_live_validators,
-      help: "Number of active validators that successfully included attestation on chain for previous epoch."
+      help:
+        "Number of active validators that successfully included attestation on chain for previous epoch."
     )
 
     Gauge.declare(
       name: :beacon_pending_deposits,
-      help: "Number of pending deposits (state.eth1_data.deposit_count - state.eth1_deposit_index)."
+      help:
+        "Number of pending deposits (state.eth1_data.deposit_count - state.eth1_deposit_index)."
     )
 
     Gauge.declare(

@@ -10,7 +10,7 @@ defmodule Beacon.Eth1 do
     {:ok, "Hallo"}
   end
 
-  def getBlock() do
+  def get_block() do
     block = Ethereumex.HttpClient.eth_get_block_by_number("latest", true)
     IO.puts(block)
   end

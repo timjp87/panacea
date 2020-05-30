@@ -40,6 +40,7 @@ defmodule Beacon.MixProject do
       {:ethereumex, "~> 0.6.2"},
       {:ex_abi, "~> 0.4.0"},
       {:libp2p, github: "timjp87/erlang-libp2p"},
+      {:basefiftyeight, "~> 0.1.0"},
       {:phoenix, "~> 1.4.0"},
       {:phoenix_pubsub, "~> 1.1"},
       {:prometheus_ex, "~> 3.0"},

@@ -9,7 +9,8 @@ defmodule Beacon.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-      BeaconWeb.Endpoint
+      BeaconWeb.Endpoint,
+      CubDB.child_spec(System.user_home() <> "/.test")
       # Starts a worker by calling: Beacon.Worker.start_link(arg)
       # {Beacon.Worker, arg},
     ]
