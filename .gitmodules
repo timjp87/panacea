@@ -16,3 +16,6 @@
 [submodule "apps/elixir_bls"]
 	path = apps/elixir_bls
 	url = https://github.com/timjp87/elixir_bls.git
+[submodule "apps/elixir_ssz"]
+	path = apps/elixir_ssz
+	url = https://github.com/timjp87/elixir_ssz.git
