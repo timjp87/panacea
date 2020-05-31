@@ -7,3 +7,9 @@
 [submodule "apps/bls/bls-eth-wasm"]
 	path = apps/bls/bls-eth-wasm
 	url = https://github.com/herumi/bls-eth-wasm.git
+[submodule "apps/elixir-ssz"]
+	path = apps/elixir-ssz
+	url = https://github.com/timjp87/elixir-ssz.git
+[submodule "apps/elixir-bls"]
+	path = apps/elixir-bls
+	url = https://github.com/timjp87/elixir-bls.git
