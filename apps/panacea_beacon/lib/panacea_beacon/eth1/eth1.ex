@@ -5,8 +5,8 @@ defmodule Beacon.Eth1 do
   use GenServer
   require Logger
 
-  def start_link(args) do
-    GenServer.start_link(__MODULE__, args)
+  def start_link(_args) do
+    GenServer.start_link(__MODULE__, [], name: :eth1)
   end
 
   def init(arg) do
@@ -14,8 +14,20 @@ defmodule Beacon.Eth1 do
     {:ok, arg}
   end
 
+  def greet(name) do
+    GenServer.call(:eth1, {:greet, name})
+  end
+
   def get_block() do
+    GenServer.call(:eth1, :get_block)
+  end
+
+  def handle_call({:greet, name}, _from, state) do
+    {:reply, "Hallo " <> name <> "!", state}
+  end
+
+  def handle_call(:get_block, _from, state) do
     block = Ethereumex.HttpClient.eth_get_block_by_number("latest", true)
-    IO.puts(block)
+    {:reply, block, state}
   end
 end

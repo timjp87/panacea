@@ -13,7 +13,7 @@ defmodule Beacon.Application do
       # Start the rest of the beacon node services.
       {Beacon.DB, []},
       {Beacon.Chain, []},
-      {Beacon.Network.P2P, []},
+      # {Beacon.Network.P2P, []},
       {Beacon.Network.DiscV5, []},
       {Beacon.Sync, []},
       {Beacon.Eth1, []}
