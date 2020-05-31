@@ -13,3 +13,6 @@
 [submodule "apps/elixir-bls"]
 	path = apps/elixir-bls
 	url = https://github.com/timjp87/elixir-bls.git
+[submodule "apps/elixir_bls"]
+	path = apps/elixir_bls
+	url = https://github.com/timjp87/elixir_bls.git
