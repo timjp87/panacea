@@ -8,12 +8,15 @@ defmodule Beacon.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      # Start the endpoint when the application starts
+      # Start the API endpoint when the application starts
       BeaconWeb.Endpoint,
-      CubDB.child_spec(System.user_home() <> "/.panacea"),
-      {Beacon.Network.P2P, []}
-      # Starts a worker by calling: Beacon.Worker.start_link(arg)
-      # {Beacon.Worker, arg},
+      # Start the rest of the beacon node services.
+      {Beacon.DB, []},
+      {Beacon.Chain, []},
+      {Beacon.Network.P2P, []},
+      {Beacon.Network.DiscV5, []},
+      {Beacon.Sync, []},
+      {Beacon.Eth1, []}
     ]
 
     BeaconWeb.Metrics.Setup.setup()

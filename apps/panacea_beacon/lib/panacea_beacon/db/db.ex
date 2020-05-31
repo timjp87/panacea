@@ -10,8 +10,8 @@ defmodule Beacon.DB do
   end
 
   def init(opts) do
-    Logger.info("Starting CubDB")
-    CubDB.start_link(opts)
+    Logger.info("Starting CubDB!")
+    CubDB.start_link(System.user_home() <> "/.panacea")
   end
 
   # Public API

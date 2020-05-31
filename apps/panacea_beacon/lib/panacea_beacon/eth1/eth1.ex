@@ -2,12 +2,16 @@ defmodule Beacon.Eth1 do
   @moduledoc """
   Handels Ethereum 1 data
   """
-  import Ethereumex
-
   use GenServer
+  require Logger
 
-  def init() do
-    {:ok, "Hallo"}
+  def start_link(args) do
+    GenServer.start_link(__MODULE__, args)
+  end
+
+  def init(arg) do
+    Logger.info("Starting ETH1 Service!")
+    {:ok, arg}
   end
 
   def get_block() do
