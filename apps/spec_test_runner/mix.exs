@@ -25,7 +25,8 @@ defmodule SpecTestRunner.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:yaml_elixir, "~> 2.4"}
+      {:yaml_elixir, "~> 2.4"},
+      {:elixir_ssz, in_umbrella: true}
     ]
   end
 end
